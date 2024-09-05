@@ -1,1 +1,10 @@
-<p>server-error works!</p>
+<h2>Internal server error</h2>
+@if(error) {
+<h5 class="text-danger">{{error.Message}}</h5>
+<p>error not in angular</p>
+<ol>
+    <li>open chrome dev tools and check network section</li>
+    <li>check the first 2 lines of stacktrace to find specific error in code</li>
+</ol>
+<code style="background-color: whitesmoke;" class="mt-5">{{error.details}}</code>
+}
