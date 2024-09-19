@@ -1,6 +1,6 @@
 <div class="row mt-4">
 
-    @for (member of members; track member.id) {
+    @for (member of memberservice.members(); track member.id) {
     <div class="col-2">
         <app-member-cards [member]="member"></app-member-cards>
     </div>

@@ -8,7 +8,7 @@
     <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar2"
       aria-labelledby="offcanvasNavbar2Label">
 
-      <div class="offcanvas-body">
+      <div class="offcanvas-body mt-2">
         <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
           @if(accountservice.currentUser()){
           <li class="nav-item">
@@ -36,6 +36,8 @@
         }
         @if(accountservice.currentUser()){
         <div class="btn-group" dropdown>
+          <img class="me-2" src="{{accountservice.currentUser()?.photoUrl || './assets/user.png'}}"
+            alt="user main image">
           <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
             aria-controls="dropdown-basic">
             Welcome {{accountservice.currentUser()?.username | titlecase}} <span class="caret"></span>
@@ -43,7 +45,7 @@
           <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
             <li role="menuitem"><a class="dropdown-item" (click)="logout()">Logout</a></li>
             <li class="divider dropdown-divider"></li>
-            <li role="menuitem"><a class="dropdown-item" href="#">Edit profile</a>
+            <li role="menuitem"><a routerLink="/member/edit" class="dropdown-item" href="#">Edit profile</a>
             </li>
           </ul>
         </div>
