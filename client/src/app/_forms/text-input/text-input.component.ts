@@ -1,6 +1,6 @@
 import { NgIf } from '@angular/common';
-import { Component, input, Self } from '@angular/core';
-import { ControlValueAccessor, FormControl, NgControl, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject, input, Self } from '@angular/core';
+import { ControlValueAccessor, FormBuilder, FormControl, NgControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-text-input',
@@ -12,6 +12,7 @@ import { ControlValueAccessor, FormControl, NgControl, ReactiveFormsModule } fro
 export class TextInputComponent implements ControlValueAccessor {
   label = input<string>('')
   type = input<string>('text')
+  private fb = inject(FormBuilder)
 
   constructor(@Self() public ngControl: NgControl){
     this.ngControl.valueAccessor = this

@@ -49,14 +49,14 @@ export class PhotoEditorComponent implements OnInit {
   }
 
   deletephoto(photo: Photo) {
-    this.memberservice.deletephoto(photo).subscribe({
-      next: _ => {
-        const updatedMember = { ...this.member() }
-        updatedMember.photos = updatedMember.photos.filter(x => x.id !== photo.id)
-        console.log(updatedMember.photos.length)
-        this.memberChange.emit(updatedMember)
-      }
-    })
+    // this.memberservice.deletephoto(photo).subscribe({
+    //   next: _ => {
+    //     const updatedMember = { ...this.member() }
+    //     updatedMember.photos = updatedMember.photos.filter(x => x.id !== photo.id)
+    //     console.log(updatedMember.photos.length)
+    //     this.memberChange.emit(updatedMember)
+    //   }
+    // })
   }
 
   intitializeUploader() {
@@ -78,6 +78,19 @@ export class PhotoEditorComponent implements OnInit {
       const updatedmember = { ...this.member() }
       updatedmember.photos.push(photo);
       this.memberChange.emit(updatedmember);
+      if(photo.isMain) {
+        const user = this.accountservice.currentUser()
+        if (user) {
+          user.photoUrl = photo.url;
+          this.accountservice.setCurrentUser(user);
+        }
+        updatedmember.photoUrl = photo.url;
+        updatedmember.photos.forEach(p => {
+          if (p.isMain) { p.isMain = false }
+          if (p.id === photo.id) { p.isMain = true }
+        });
+        this.memberChange.emit(updatedmember)
+      }
     }
   }
 

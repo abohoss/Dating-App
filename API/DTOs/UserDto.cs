@@ -5,5 +5,8 @@
         public required string Username { get; set; }
         public required string token { get; set; }
         public string? PhotoUrl { get; set; }
+
+        public required string Gender { get; set; }
+        public required string KnownAs { get; set; }
     }
 }

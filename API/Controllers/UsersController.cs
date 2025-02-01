@@ -2,6 +2,7 @@
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -16,9 +17,11 @@ namespace API.Controllers
     {
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {
-            var users = await _userRepo.GetMembersAsync();
+            userParams.CurrentUser = User.GetUsername();
+            var users = await _userRepo.GetMembersAsync(userParams);
+            Response.addHeader(users);
             return Ok(users);
         }
 
@@ -59,7 +62,7 @@ namespace API.Controllers
                 Url = result.SecureUrl.AbsoluteUri,
                 PublicId = result.PublicId
             };
-
+            if(user.Photos.Count == 0) photo.IsMain = true;
             user.Photos.Add(photo);
 
             if (await _userRepo.SaveChangesAsync())
